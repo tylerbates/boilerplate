@@ -23,38 +23,30 @@
  */
 
 /**
- * Questions model
+ * Question status model
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
  * @subpackage Model
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
-
-class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
+class Oggetto_Questions_Model_Question_Status
 {
-    /**
-     * initialize model
-     *
-     * @return Oggetto_Questions_Model_Question
-     */
-    protected function _construct()
-    {
-        $this->_init('questions/question');
-    }
+    const NOT_ANSWERED = 0;
+
+    const ANSWERED = 1;
 
     /**
-     * Set creation date before saving question
+     * get statuses hash
      *
-     * @return Oggetto_Questions_Model_Question
+     * @return array
      */
-    protected function _beforeSave()
+    public function getStatusHash()
     {
-        parent::_beforeSave();
-        if ($this->isObjectNew()) {
-            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
-            $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
-        }
-        return $this;
+        $helper = Mage::helper('questions');
+        return [
+            self::NOT_ANSWERED => $helper->__('Not answered'),
+            self::ANSWERED => $helper->__('Answered')
+        ];
     }
 }

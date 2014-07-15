@@ -23,38 +23,50 @@
  */
 
 /**
- * Questions model
+ * Adminhtml Questions form container
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
- * @subpackage Model
+ * @subpackage Block
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
+class Oggetto_Questions_Block_Adminhtml_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     /**
-     * initialize model
+     * Prepare form data
      *
-     * @return Oggetto_Questions_Model_Question
+     * @return Oggetto_Questions_Block_Adminhtml_Edit
      */
-    protected function _construct()
+    public function __construct()
     {
-        $this->_init('questions/question');
+        $this->_objectId = 'entity_id';
+        $this->_mode = 'edit';
+        $this->_blockGroup = 'questions';
+        $this->_controller = 'adminhtml';
+
+        parent::__construct();
+
+        $this->_removeButton('reset');
     }
 
     /**
-     * Set creation date before saving question
+     * Get current question
      *
      * @return Oggetto_Questions_Model_Question
      */
-    protected function _beforeSave()
+    public function getQuestion()
     {
-        parent::_beforeSave();
-        if ($this->isObjectNew()) {
-            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
-            $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
-        }
-        return $this;
+        return Mage::registry('current_question');
+    }
+
+    /**
+     * Get header text
+     *
+     * @return string
+     */
+    public function getHeaderText()
+    {
+        return Mage::helper('questions')->__("Edit question #%s", $this->getQuestion()->getId());
     }
 }

@@ -23,7 +23,7 @@
  */
 
 /**
- * Questions model
+ * Questions resource collection
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
@@ -31,30 +31,15 @@
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
+class Oggetto_Questions_Model_Resource_Question_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     /**
-     * initialize model
+     * Define resource model and model
      *
-     * @return Oggetto_Questions_Model_Question
+     * @return void
      */
     protected function _construct()
     {
         $this->_init('questions/question');
-    }
-
-    /**
-     * Set creation date before saving question
-     *
-     * @return Oggetto_Questions_Model_Question
-     */
-    protected function _beforeSave()
-    {
-        parent::_beforeSave();
-        if ($this->isObjectNew()) {
-            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
-            $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
-        }
-        return $this;
     }
 }

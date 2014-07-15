@@ -23,38 +23,26 @@
  */
 
 /**
- * Questions model
+ * Adminhtml Questions grid container
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
- * @subpackage Model
+ * @subpackage Block
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
+class Oggetto_Questions_Block_Adminhtml_Questions extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
     /**
-     * initialize model
+     * Set setting
      *
-     * @return Oggetto_Questions_Model_Question
+     * @return Oggetto_Questions_Block_Adminhtml_Questions
      */
-    protected function _construct()
+    public function __construct()
     {
-        $this->_init('questions/question');
-    }
-
-    /**
-     * Set creation date before saving question
-     *
-     * @return Oggetto_Questions_Model_Question
-     */
-    protected function _beforeSave()
-    {
-        parent::_beforeSave();
-        if ($this->isObjectNew()) {
-            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
-            $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
-        }
-        return $this;
+        $this->_blockGroup = 'questions';
+        $this->_controller = 'adminhtml_questions';
+        $this->_headerText = Mage::helper('questions')->__('Manage customers questions');
+        parent::__construct();
     }
 }

@@ -23,38 +23,31 @@
  */
 
 /**
- * Questions model
+ * Adminhtml Questions grid date renderer
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
- * @subpackage Model
+ * @subpackage Block
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
+class Oggetto_Questions_Block_Adminhtml_Questions_Grid_Date
+    extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
     /**
-     * initialize model
+     * render date
      *
-     * @return Oggetto_Questions_Model_Question
+     * @param Varien_Object $row Row
+     * @return string
      */
-    protected function _construct()
+    public function render(Varien_Object $row)
     {
-        $this->_init('questions/question');
-    }
-
-    /**
-     * Set creation date before saving question
-     *
-     * @return Oggetto_Questions_Model_Question
-     */
-    protected function _beforeSave()
-    {
-        parent::_beforeSave();
-        if ($this->isObjectNew()) {
-            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
-            $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
-        }
-        return $this;
+        $date =  $this->_getValue($row);
+        $newDate = Mage::app()->getLocale()->storeDate(
+            Mage::app()->getStore('default'),
+            Varien_Date::toTimestamp($date),
+            true
+        );
+        return $newDate->toString(Varien_Date::DATETIME_INTERNAL_FORMAT);
     }
 }

@@ -58,6 +58,7 @@ class Oggetto_Questions_IndexController extends Mage_Core_Controller_Front_Actio
             Mage::getSingleton('core/session')->addSuccess($this->__('Your question has been added'));
         } catch (Mage_Core_Exception $e) {
             Mage::getSingleton('core/session')->addError($e->getMessage());
+            Mage::logException($e);
         } catch (Exception $e) {
             Mage::logException($e);
         }
