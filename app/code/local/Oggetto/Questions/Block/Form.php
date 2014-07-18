@@ -23,23 +23,50 @@
  */
 
 /**
- * Questions helper
+ * Questions form block
  *
  * @category   Oggetto
  * @package    Oggetto_Questions
- * @subpackage Model
+ * @subpackage Block
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Questions_Helper_Data extends Mage_Core_Helper_Abstract
+class Oggetto_Questions_Block_Form extends Mage_Core_Block_Template
 {
     /**
-     * get Questions Url
+     * Get customer if logged in
+     *
+     * @return Mage_Customer_Model_Customer | false
+     */
+    private function _getCustomer()
+    {
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            return Mage::getSingleton('customer/session')->getCustomer();
+        }
+        return false;
+    }
+
+    /**
+     * Get customer Name
      *
      * @return string
      */
-    public function geturl()
+    public function getCustomerName()
     {
-        return $this->_getUrl('questions');
+        return $this->_getCustomer() ?
+            $this->_getCustomer()->getName() :
+            '';
+    }
+
+    /**
+     * Get customer Email
+     *
+     * @return string
+     */
+    public function getCustomerEmail()
+    {
+        return $this->_getCustomer() ?
+            $this->_getCustomer()->getEmail() :
+            '';
     }
 }

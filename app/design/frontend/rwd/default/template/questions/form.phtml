@@ -1,14 +1,14 @@
-<div style="width:300px;">
-    <h1 align="center">ASK US A QUESTION:</h1>
+<div style="width:500px;">
+    <h1 align="center"><?php echo $this->__('ASK US A QUESTION:') ?></h1>
     <form method="post" action="<?php echo $this->getUrl('questions/index/save') ?>">
         <div class="input-box" align="center">
         <span>
-            <input type="text" id="name" name="name" placeholder="Ivan" class="input-text required-entry"/>
+            <input type="text" id="name" name="name" value="<?php echo $this->getCustomerName() ?>" placeholder="Ivan" class="input-text required-entry"/>
         </span>
         </div>
         <div class="input-box" align="center">
         <span>
-            <input type="email" id="email" name="email" placeholder="ivan@example.com" class="input-text required-entry"/>
+            <input type="email" id="email" name="email" value="<?php echo $this->getCustomerEmail() ?>" placeholder="ivan@example.com" class="input-text required-entry"/>
         </span>
         </div>
         <div class="input-box" align="center">
@@ -17,7 +17,7 @@
         </span>
         </div>
         <div class="input-box" align="center">
-            <input type="submit" value="ask" class="button"/>
+            <input type="submit" value="<?php echo $this->__('ask') ?>" class="button"/>
         </div>
     </form>
 </div>

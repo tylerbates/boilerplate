@@ -42,3 +42,6 @@
 "An error occured while deleting questions","Во время удаления произошла ошибка"
 "Questions statuses successfully updated","Статусы вопросов успешно обновлены"
 "An error occured while changing statuses","Во время обновления статусов произошла ошибка"
+"ANSWERED QUESTIONS:","ОТВЕЧЕННЫЕ ВОПРОСЫ:"
+"Q: ","В: "
+"A: ","О: "
