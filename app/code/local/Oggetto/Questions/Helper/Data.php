@@ -33,6 +33,21 @@
 
 class Oggetto_Questions_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /** @var Oggetto_Questions_Model_Resource_Question_Collection */
+    private $_collection;
+
+    /**
+     * Set up collection on load
+     *
+     * @return Oggetto_Questions_Helper_Data
+     */
+    public function __construct()
+    {
+        $this->_collection = Mage::getModel('questions/question')
+            ->getCollection()
+            ->addFieldToFilter('status', ['eq' => Oggetto_Questions_Model_Question_Status::ANSWERED]);
+    }
+
     /**
      * get Questions Url
      *
@@ -41,5 +56,35 @@ class Oggetto_Questions_Helper_Data extends Mage_Core_Helper_Abstract
     public function geturl()
     {
         return $this->_getUrl('questions');
+    }
+
+    /**
+     * get page limits for questions list
+     *
+     * @return array
+     */
+    public function getPageLimits()
+    {
+        return [5 => 5];
+    }
+
+    /**
+     * Get collection for pager
+     *
+     * @return Oggetto_Questions_Model_Resource_Question_Collection
+     */
+    public function getCollection()
+    {
+        return $this->_collection;
+    }
+
+    /**
+     * get Show Amounts
+     *
+     * @return array
+     */
+    public function getShowAmounts()
+    {
+        return ['show_amounts' => false];
     }
 }

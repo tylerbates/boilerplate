@@ -118,5 +118,21 @@
                 <class>Oggetto_Questions_Block</class>
             </questions>
         </blocks>
+        <template>
+            <email>
+                <questions_email_template translate="label" module="questions">
+                    <label>Questions Email</label>
+                    <file>questions_email.html</file>
+                    <type>html</type>
+                </questions_email_template>
+            </email>
+        </template>
     </global>
+    <default>
+        <questions>
+            <email>
+                <template>questions_email_template</template>
+            </email>
+        </questions>
+    </default>
 </config>

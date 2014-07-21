@@ -97,10 +97,9 @@ class Oggetto_Questions_Adminhtml_QuestionsController extends Mage_Adminhtml_Con
     {
         $data = $this->getRequest()->getPost();
         $id = $this->getRequest()->getParam('entity_id');
-        $question = Mage::getModel('questions/question')->load($id);
+        $question = Mage::getModel('questions/question')->setId($id);
         try {
-            $question->addData($data)
-                ->save();
+            $question->addData($data)->save();
             $this->_getSession()->addSuccess(Mage::helper('questions')->__('Question successfully saved'));
         } catch (Mage_Core_Exception $e) {
             $this->_getSession()->addError($e->getMessage());
@@ -120,23 +119,18 @@ class Oggetto_Questions_Adminhtml_QuestionsController extends Mage_Adminhtml_Con
     public function deleteAction()
     {
         $id = $this->getRequest()->getParam('entity_id');
-        $question = Mage::getModel('questions/question')->load($id);
-        if (!$question->getId()) {
-            $this->_getSession()->addError(Mage::helper('questions')->__('Question not found'));
-            $this->_redirectReferer();
-        } else {
-            try {
-                $question->delete();
-                $this->_getSession()->addSuccess(Mage::helper('questions')->__('Question successfully deleted'));
-            } catch (Mage_Core_Exception $e) {
-                $this->_getSession()->addError($e->getMessage());
-                Mage::logException($e);
-            } catch (Exception $e) {
-                $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while deleting question'));
-                Mage::logException($e);
-            }
-            $this->_redirect('*/*/index');
+        $question = Mage::getModel('questions/question')->setId($id);
+        try {
+            $question->delete();
+            $this->_getSession()->addSuccess(Mage::helper('questions')->__('Question successfully deleted'));
+        } catch (Mage_Core_Exception $e) {
+            $this->_getSession()->addError($e->getMessage());
+            Mage::logException($e);
+        } catch (Exception $e) {
+            $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while deleting question'));
+            Mage::logException($e);
         }
+        $this->_redirect('*/*/index');
     }
 
     /**
@@ -149,22 +143,17 @@ class Oggetto_Questions_Adminhtml_QuestionsController extends Mage_Adminhtml_Con
         $entities = $this->getRequest()->getPost('entities');
         $hasError = false;
         foreach ($entities as $entityId) {
-            $question = Mage::getModel('questions/question')->load($entityId);
-            if (!$question->getId()) {
+            $question = Mage::getModel('questions/question')->setId($entityId);
+            try {
+                $question->delete();
+            } catch (Mage_Core_Exception $e) {
                 $hasError = true;
-                $this->_getSession()->addError(Mage::helper('questions')->__('Question #%s not found', $entityId));
-            } else {
-                try {
-                    $question->delete();
-                } catch (Mage_Core_Exception $e) {
-                    $hasError = true;
-                    $this->_getSession()->addError($e->getMessage());
-                    Mage::logException($e);
-                } catch (Exception $e) {
-                    $hasError = true;
-                    $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while deleting questions'));
-                    Mage::logException($e);
-                }
+                $this->_getSession()->addError($e->getMessage());
+                Mage::logException($e);
+            } catch (Exception $e) {
+                $hasError = true;
+                $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while deleting questions'));
+                Mage::logException($e);
             }
         }
 
@@ -186,22 +175,17 @@ class Oggetto_Questions_Adminhtml_QuestionsController extends Mage_Adminhtml_Con
         $status = $this->getRequest()->getPost('status');
         $hasError = false;
         foreach ($entities as $entityId) {
-            $question = Mage::getModel('questions/question')->load($entityId);
-            if (!$question->getId()) {
+            $question = Mage::getModel('questions/question')->setId($entityId);
+            try {
+                $question->setStatus($status)->save();
+            } catch (Mage_Core_Exception $e) {
                 $hasError = true;
-                $this->_getSession()->addError(Mage::helper('questions')->__('Question #%s not found', $entityId));
-            } else {
-                try {
-                    $question->setStatus($status)->save();
-                } catch (Mage_Core_Exception $e) {
-                    $hasError = true;
-                    $this->_getSession()->addError($e->getMessage());
-                    Mage::logException($e);
-                } catch (Exception $e) {
-                    $hasError = true;
-                    $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while changing statuses'));
-                    Mage::logException($e);
-                }
+                $this->_getSession()->addError($e->getMessage());
+                Mage::logException($e);
+            } catch (Exception $e) {
+                $hasError = true;
+                $this->_getSession()->addError(Mage::helper('questions')->__('An error occured while changing statuses'));
+                Mage::logException($e);
             }
         }
 

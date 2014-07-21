@@ -33,22 +33,6 @@
 
 class Oggetto_Questions_Block_List extends Mage_Core_Block_Template
 {
-    /** @var Oggetto_Questions_Model_Resource_Question_Collection */
-    private $_collection;
-
-    /**
-     * Set uo collection on load
-     *
-     * @return Oggetto_Questions_Block_List
-     */
-    public function __construct()
-    {
-        parent::__construct();
-        $this->_collection = Mage::getModel('questions/question')
-            ->getCollection()
-            ->addFieldToFilter('status', ['eq' => Oggetto_Questions_Model_Question_Status::ANSWERED]);
-    }
-
     /**
      * Get collection of questions
      *
@@ -56,26 +40,7 @@ class Oggetto_Questions_Block_List extends Mage_Core_Block_Template
      */
     public function getCollection()
     {
-        return $this->_collection;
-    }
-
-    /**
-     * add pagination
-     *
-     * @return Oggetto_Questions_Block_List
-     */
-    protected function _prepareLayout()
-    {
-        parent::_prepareLayout();
-
-        $pager = $this->getLayout()->createBlock('page/html_pager', 'questions.pager');
-        $pager->setAvailableLimit(array(5=>5));
-        $pager->setShowAmounts(false);
-        $pager->setCollection($this->getCollection());
-
-        $this->setChild('pager', $pager);
-
-        return $this;
+        return Mage::helper('questions')->getCollection();
     }
 
     /**

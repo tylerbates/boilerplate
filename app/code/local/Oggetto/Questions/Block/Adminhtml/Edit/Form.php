@@ -65,11 +65,14 @@ class Oggetto_Questions_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_W
             ]);
         }
 
-        $fieldset->addField('status', 'select', [
-            'name'   => 'status',
-            'label'  => Mage::helper('questions')->__('Status'),
-            'values' => Mage::getModel('questions/question_status')->getStatusHash()
-        ]);
+        if (!$this->_getQuestion()->isObjectNew()) {
+            $fieldset->addField('status', 'select', [
+                'name'   => 'status',
+                'label'  => Mage::helper('questions')->__('Status'),
+                'values' => Mage::getModel('questions/question_status')->getStatusHash()
+            ]);
+        }
+
 
         $fieldset->addField('question', 'editor', array(
             'name'     => 'question',
@@ -86,6 +89,10 @@ class Oggetto_Questions_Block_Adminhtml_Edit_Form extends Mage_Adminhtml_Block_W
             'label'    => Mage::helper('questions')->__('Answer'),
             'config'   => $wysiwygConfig
         ));
+
+        $fieldset->addField('email_sent', 'hidden', [
+            'name' => 'email_sent',
+        ]);
 
         $form->setMethod('post');
         $form->setUseContainer(true);

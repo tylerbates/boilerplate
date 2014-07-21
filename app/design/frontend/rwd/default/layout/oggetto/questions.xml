@@ -26,7 +26,19 @@
 <layout version="1.0.0">
     <questions_index_index>
         <reference name="content">
-            <block type="questions/list" name="questions.list" as="questions.list" template="questions/list.phtml"/>
+            <block type="questions/list" name="questions.list" as="questions.list" template="questions/list.phtml">
+                <block type="page/html_pager" name="questions.pager" as="pager">
+                    <action method="setAvailableLimit">
+                        <limits helper="questions/getPageLimits"/>
+                    </action>
+                    <action method="setData">
+                        <key helper="questions/getShowAmounts"/>
+                    </action>
+                    <action method="setCollection">
+                        <collection helper="questions/getCollection"/>
+                    </action>
+                </block>
+            </block>
             <block type="questions/form" name="questions.form" as="questions.form" template="questions/form.phtml"/>
         </reference>
     </questions_index_index>
