@@ -51,54 +51,25 @@ class Oggetto_Shipping_Model_Carrier_Oggetto
     public function collectRates(Mage_Shipping_Model_Rate_Request $request)
     {
         $result = Mage::getModel('shipping/rate_result');
+        $prices = Mage::getModel('oggetto_shipping/calculator')->getPricesForRequest($request);
 
-        $address = $this->_getQuote($request)->getShippingAddress();
-
-        $claimParams = [
-            'from_country' => 'Россия',
-            'from_region'  => 'Москва',
-            'from_city'    => 'Москва',
-            'to_country'   => Mage::app()->getLocale()->getCountryTranslation($address->getCountry()),
-            'to_region'    => $address->getRegion(),
-            'to_city'      => $address->getCity()
-        ];
-
-        $claimUrl = 'http://new.oggy.co/shipping/api/rest.php';
-
-        $claim = $claimUrl . '?' . http_build_query($claimParams);
-
-        $claimResult = json_decode(file_get_contents($claim));
-
-        if ($claimResult->status != 'success') {
+        if (!$prices) {
             return false;
         }
 
-        $prices = (array) $claimResult->prices;
-
         foreach ($prices as $label => $price) {
-//            $price = Mage::helper('directory')->currencyConvert($price, 'RUB');
+            $price = Mage::helper('oggetto_shipping')->getPriceForBaseCurrency($price);
             $method = Mage::getModel('shipping/rate_result_method');
             $method->setCarrier($this->_code);
-            $method->setCarrierTitle($this->getConfigData('title'));
+            $method->setCarrierTitle(Mage::helper('oggetto_shipping')->__($this->getConfigData('title')));
             $method->setMethod($label);
-            $method->setMethodTitle($label);
+            $method->setMethodTitle(Mage::helper('oggetto_shipping')->__($label));
             $method->setCost($price);
             $method->setPrice($price);
             $result->append($method);
         }
 
         return $result;
-    }
-
-    /**
-     * retrieve quote from request
-     *
-     * @param Mage_Shipping_Model_Rate_Request $request Request
-     * @return Mage_Sales_Model_Quote
-     */
-    private function _getQuote($request)
-    {
-        return $request->getAllItems()[0]->getQuote();
     }
 
     /**

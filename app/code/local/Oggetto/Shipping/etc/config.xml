@@ -26,7 +26,7 @@
 <config>
     <modules>
         <Oggetto_Shipping>
-            <version>0.1.0</version>
+            <version>0.1.1</version>
         </Oggetto_Shipping>
     </modules>
     <global>
@@ -45,13 +45,40 @@
                 </connection>
             </oggetto_shipping_setup>
         </resources>
+        <helpers>
+            <oggetto_shipping>
+                <class>Oggetto_Shipping_Helper</class>
+            </oggetto_shipping>
+        </helpers>
     </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Oggetto_Shipping>
+                    <files>
+                        <default>Oggetto_Shipping.csv</default>
+                    </files>
+                </Oggetto_Shipping>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Oggetto_Shipping>
+                    <files>
+                        <default>Oggetto_Shipping.csv</default>
+                    </files>
+                </Oggetto_Shipping>
+            </modules>
+        </translate>
+    </adminhtml>
     <default>
         <carriers>
             <oggetto>
                 <active>1</active>
-                <name>Oggetto Shipping</name>
                 <title>Oggetto Shipping</title>
+                <claim_url>http://new.oggy.co/shipping/api/rest.php</claim_url>
                 <model>oggetto_shipping/carrier_oggetto</model>
             </oggetto>
         </carriers>
