@@ -51,9 +51,17 @@ class Oggetto_Questions_IndexController extends Mage_Core_Controller_Front_Actio
      */
     public function saveAction()
     {
-        Mage::getModel('questions/question')
-            ->setData($this->getRequest()->getParams())
-            ->save();
-        $this->_redirect('*/index');
+        try {
+            Mage::getModel('questions/question')
+                ->setData($this->getRequest()->getParams())
+                ->save();
+            Mage::getSingleton('core/session')->addSuccess($this->__('Your question has been added'));
+        } catch (Mage_Core_Exception $e) {
+            Mage::getSingleton('core/session')->addError($e->getMessage());
+            Mage::logException($e);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
+        $this->_redirectReferer();
     }
 }

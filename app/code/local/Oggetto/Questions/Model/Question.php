@@ -42,4 +42,42 @@ class Oggetto_Questions_Model_Question extends Mage_Core_Model_Abstract
     {
         $this->_init('questions/question');
     }
+
+    /**
+     * Set creation date before saving question
+     *
+     * @return Oggetto_Questions_Model_Question
+     */
+    protected function _beforeSave()
+    {
+        parent::_beforeSave();
+        if ($this->isObjectNew()) {
+            $this->setCreatedAt(Mage::getModel('core/date')->gmtDate());
+            if (!$this->hasAnswer()) {
+                $this->setStatus(Oggetto_Questions_Model_Question_Status::NOT_ANSWERED);
+            } else {
+                $this->setStatus(Oggetto_Questions_Model_Question_Status::ANSWERED);
+                $this->_sendEmail();
+            }
+        } else {
+            if (
+                $this->getStatus() == Oggetto_Questions_Model_Question_Status::ANSWERED &&
+                !$this->getEmailSent()
+            ) {
+                $this->_sendEmail();
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * Send email to user if his question answered
+     *
+     * @return void
+     */
+    private function _sendEmail()
+    {
+        $this->setEmailSent(1);
+        Mage::getModel('questions/question_mail')->send($this);
+    }
 }

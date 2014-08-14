@@ -27,26 +27,30 @@ $installer = $this;
 
 $installer->startSetup();
 
-$table = $installer->getConnection()
-    ->newTable($installer->getTable('questions/question'))
-    ->addColumn(
-        'entity_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
-            'identity'  => true,
-            'unsigned'  => true,
-            'nullable'  => false,
-            'primary'   => true,
-        ), 'Question ID'
-    )
-    ->addColumn(
-        'name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(), 'Sender name'
-    )
-    ->addColumn(
-        'email', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(), 'Sender email'
-    )
-    ->addColumn(
-        'question', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(), 'Question text'
-    )
-    ->setComment('Questions entities');
-$installer->getConnection()->createTable($table);
+try {
+    $table = $installer->getConnection()
+        ->newTable($installer->getTable('questions/question'))
+        ->addColumn(
+            'entity_id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(
+                'identity'  => true,
+                'unsigned'  => true,
+                'nullable'  => false,
+                'primary'   => true,
+            ), 'Question ID'
+        )
+        ->addColumn(
+            'name', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(), 'Sender name'
+        )
+        ->addColumn(
+            'email', Varien_Db_Ddl_Table::TYPE_TEXT, 255, array(), 'Sender email'
+        )
+        ->addColumn(
+            'question', Varien_Db_Ddl_Table::TYPE_TEXT, null, array(), 'Question text'
+        )
+        ->setComment('Questions entities');
+    $installer->getConnection()->createTable($table);
+} catch (Exception $e) {
+    Mage::logException($e);
+}
 
 $installer->endSetup();

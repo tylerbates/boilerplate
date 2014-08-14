@@ -26,7 +26,7 @@
 <config>
     <modules>
         <Oggetto_Questions>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </Oggetto_Questions>
     </modules>
     <frontend>
@@ -46,7 +46,45 @@
                 </questions>
             </updates>
         </layout>
+        <translate>
+            <modules>
+                <Oggetto_Questions>
+                    <files>
+                        <default>Oggetto_Questions.csv</default>
+                    </files>
+                </Oggetto_Questions>
+            </modules>
+        </translate>
     </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Oggetto_Questions before="Mage_Adminhtml">Oggetto_Questions_Adminhtml</Oggetto_Questions>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <questions module="Oggetto_Questions">
+                    <file>oggetto/questions.xml</file>
+                </questions>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Oggetto_Questions>
+                    <files>
+                        <default>Oggetto_Questions.csv</default>
+                    </files>
+                </Oggetto_Questions>
+            </modules>
+        </translate>
+    </adminhtml>
     <global>
         <models>
             <questions>
@@ -70,5 +108,31 @@
                 </setup>
             </questions_setup>
         </resources>
+        <helpers>
+            <questions>
+                <class>Oggetto_Questions_Helper</class>
+            </questions>
+        </helpers>
+        <blocks>
+            <questions>
+                <class>Oggetto_Questions_Block</class>
+            </questions>
+        </blocks>
+        <template>
+            <email>
+                <questions_email_template translate="label" module="questions">
+                    <label>Questions Email</label>
+                    <file>questions_email.html</file>
+                    <type>html</type>
+                </questions_email_template>
+            </email>
+        </template>
     </global>
+    <default>
+        <questions>
+            <email>
+                <template>questions_email_template</template>
+            </email>
+        </questions>
+    </default>
 </config>

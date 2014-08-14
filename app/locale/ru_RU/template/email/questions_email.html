@@ -1,0 +1,42 @@
+<!--@subject Ответ на вопрос @-->
+
+<!--@styles
+body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+
+<body style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<div style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+    <table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+        <tr>
+            <th><h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;">Dear {{htmlescape var=$question.getName()}}, вы задавали нам вопрос, так вот, мы на него ответили.</h1></th>
+        </tr>
+        <tr>
+            <td>
+                <p align="center" style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                    Вот вопрос:
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                    {{htmlescape var=$question.getQuestion()}}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p align="center" style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                    А вот ответ:
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#f9f9f9;">
+                    {{htmlescape var=$question.getAnswer()}}
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
