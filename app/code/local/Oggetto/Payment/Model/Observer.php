@@ -23,23 +23,23 @@
  */
 
 /**
- * Payment redirect controller
+ * Payment observer
  *
  * @category   Oggetto
  * @package    Oggetto_Payment
- * @subpackage controllers
+ * @subpackage Model
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Payment_RedirectController extends Mage_Core_Controller_Front_Action
+class Oggetto_Payment_Model_Observer
 {
     /**
-     * redirect action
+     * Add payment key to invoice
      *
      * @return void
      */
-    public function indexAction()
+    public function addPaymentKeyToInvoice()
     {
-        echo 'AZZAZAZAZAZ';
+
     }
 }

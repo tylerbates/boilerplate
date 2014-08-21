@@ -49,11 +49,5 @@ class Oggetto_Sales_Model_Observer
             array('billing_address_id' => 'entity_id'),
             'telephone'
         );
-        $resource->addVirtualGridColumn(
-            'shipping_description',
-            'sales/order',
-            array('entity_id' => 'entity_id'),
-            'shipping_description'
-        );
     }
 }

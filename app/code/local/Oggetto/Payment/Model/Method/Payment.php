@@ -23,23 +23,55 @@
  */
 
 /**
- * Payment redirect controller
+ * Payment model
  *
  * @category   Oggetto
  * @package    Oggetto_Payment
- * @subpackage controllers
+ * @subpackage Model
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_Payment_RedirectController extends Mage_Core_Controller_Front_Action
+class Oggetto_Payment_Model_Method_Payment extends Mage_Payment_Model_Method_Abstract
 {
     /**
-     * redirect action
+     * Method code
      *
-     * @return void
+     * @var string
      */
-    public function indexAction()
+    protected $_code = 'oggetto';
+
+    /**
+     * Parameter to get invoice not in "paid" status
+     *
+     * @var boolean
+     */
+    protected $_canCapture = true;
+
+    /**
+     * Parameter to allow to partially invoice order
+     *
+     * @var boolean
+     */
+    protected $_canCapturePartial = true;
+
+    /**
+     * returns redirect url
+     *
+     * @return string
+     */
+    public function getOrderPlaceRedirectUrl()
     {
-        echo 'AZZAZAZAZAZ';
+        return Mage::getUrl('oggypay/redirect', array('_secure' => true));
+    }
+
+    /**
+     * Method supports direct payment
+     * (invoice could be paid via gateway after order placement)
+     *
+     * @return bool
+     */
+    public function hasDirectPaymentSupport()
+    {
+        return true;
     }
 }
