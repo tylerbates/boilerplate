@@ -33,5 +33,23 @@
 
 class Oggetto_Payment_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /**
+     * Get payment claim url
+     *
+     * @return string
+     */
+    public function getClaimUrl()
+    {
+        return Mage::getStoreConfig('payment/oggetto/gateway_url');
+    }
 
+    /**
+     * Get store secret key
+     *
+     * @return string
+     */
+    public function getSecretKey()
+    {
+        return Mage::helper('core')->decrypt(Mage::getStoreConfig('payment/oggetto/secret_key'));
+    }
 }

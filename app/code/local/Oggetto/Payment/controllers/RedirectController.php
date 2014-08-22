@@ -40,6 +40,31 @@ class Oggetto_Payment_RedirectController extends Mage_Core_Controller_Front_Acti
      */
     public function indexAction()
     {
-        echo 'AZZAZAZAZAZ';
+        $this->loadLayout();
+        $order = Mage::getSingleton('checkout/session')->getLastRealOrder();
+        $this->getLayout()->getBlock('redirect_form')->setOrder($order);
+        $this->renderLayout();
+    }
+
+    /**
+     * Success action
+     *
+     * @return void
+     */
+    public function successAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+    }
+
+    /**
+     * Fail action
+     *
+     * @return void
+     */
+    public function failAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }

@@ -82,6 +82,13 @@
                 </args>
             </oggetto_payment>
         </routers>
+        <layout>
+            <updates>
+                <oggetto_payment>
+                    <file>oggetto/payment.xml</file>
+                </oggetto_payment>
+            </updates>
+        </layout>
         <translate>
             <modules>
                 <Oggetto_Payment>
