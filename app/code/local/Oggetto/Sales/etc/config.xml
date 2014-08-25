@@ -49,6 +49,14 @@
                     </oggetto_sales>
                 </observers>
             </sales_order_resource_init_virtual_grid_columns>
+            <checkout_submit_all_after>
+                <observers>
+                    <create_invoice_after_order_creation>
+                        <class>oggetto_sales/observer</class>
+                        <method>createInvoiceAfterOrderCreation</method>
+                    </create_invoice_after_order_creation>
+                </observers>
+            </checkout_submit_all_after>
         </events>
         <resources>
             <oggetto_sales_setup>

@@ -50,4 +50,17 @@ class Oggetto_Sales_Model_Observer
             'telephone'
         );
     }
+
+    /**
+     * Create Invoice after order creation
+     *
+     * @param Varien_Event_Observer $observer observer
+     * @return void
+     */
+    public function createInvoiceAfterOrderCreation(Varien_Event_Observer $observer)
+    {
+        $order = $observer->getEvent()->getOrder();
+        $invoiceId = Mage::getModel('sales/order_invoice_api')
+            ->create($order->getIncrementId(), array());
+    }
 }
