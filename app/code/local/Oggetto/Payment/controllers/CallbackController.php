@@ -40,6 +40,13 @@ class Oggetto_Payment_CallbackController extends Mage_Core_Controller_Front_Acti
      */
     public function indexAction()
     {
-        $this->getResponse()->setHttpResponseCode(200);
+        foreach ($this->getRequest()->getParams() as $key => $value) {
+            Mage::log($key . ' => ' . $value);
+        }
+        $result = Mage::getModel('oggetto_payment/processor')
+            ->initFromHttp($this->getRequest())
+            ->process();
+        $this->getResponse()->setHttpResponseCode($result['code']);
+        $this->getResponse()->setBody($result['text']);
     }
 }

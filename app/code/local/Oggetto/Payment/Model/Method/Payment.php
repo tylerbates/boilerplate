@@ -63,15 +63,4 @@ class Oggetto_Payment_Model_Method_Payment extends Mage_Payment_Model_Method_Abs
     {
         return Mage::getUrl('oggypay/redirect', array('_secure' => true));
     }
-
-    /**
-     * Method supports direct payment
-     * (invoice could be paid via gateway after order placement)
-     *
-     * @return bool
-     */
-    public function hasDirectPaymentSupport()
-    {
-        return true;
-    }
 }

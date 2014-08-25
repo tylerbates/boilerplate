@@ -52,4 +52,38 @@ class Oggetto_Payment_Helper_Data extends Mage_Core_Helper_Abstract
     {
         return Mage::helper('core')->decrypt(Mage::getStoreConfig('payment/oggetto/secret_key'));
     }
+
+    /**
+     * Generate Hash for request
+     *
+     * @param array $fields Request params
+     * @return string
+     */
+    public function generateHash($fields)
+    {
+        ksort($fields, SORT_STRING);
+        $queryString = '';
+        foreach ($fields as $key => $value) {
+            $queryString .= $key . ':' . $value . '|';
+        }
+        $queryString .= $this->getSecretKey();
+        return md5($queryString);
+    }
+
+    /**
+     * get price in rubles
+     *
+     * @param Mage_Sales_Model_Order $order Order
+     * @return float
+     */
+    public function getPriceFormatted($order)
+    {
+        $price = Mage::helper('directory')->currencyConvert(
+            $order->getGrandTotal(),
+            Mage::app()->getStore()->getCurrentCurrencyCode(),
+            'RUB'
+        );
+
+        return number_format((float) $price, 2, ',', '');
+    }
 }

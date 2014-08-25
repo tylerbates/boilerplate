@@ -59,31 +59,15 @@ class Oggetto_Payment_Model_Request extends Mage_Core_Model_Abstract
     {
         $fields = [
             'order_id'           => $this->getOrder()->getIncrementId(),
-            'total'              => $this->_getPriceFormatted(),
+            'total'              => Mage::helper('oggetto_payment')->getPriceFormatted($this->getOrder()),
             'items'              => $this->_getOrderItems(),
             'success_url'        => Mage::getUrl('oggypay/redirect/success'),
             'error_url'          => Mage::getUrl('oggypay/redirect/fail'),
             'payment_report_url' => Mage::getUrl('oggypay/callback/index'),
         ];
 
-        $fields['hash'] = $this->_generateHash($fields);
+        $fields['hash'] = Mage::helper('oggetto_payment')->generateHash($fields);
         return $fields;
-    }
-
-    /**
-     * get price in rubles
-     *
-     * @return float
-     */
-    private function _getPriceFormatted()
-    {
-        $price = Mage::helper('directory')->currencyConvert(
-            $this->getOrder()->getGrandTotal(),
-            Mage::app()->getStore()->getCurrentCurrencyCode(),
-            'RUB'
-        );
-
-        return number_format((float) $price, 2, '.', '');
     }
 
     /**
@@ -104,20 +88,4 @@ class Oggetto_Payment_Model_Request extends Mage_Core_Model_Abstract
         return implode(',', $items);
     }
 
-    /**
-     * get request Hash
-     *
-     * @param array $fields Form fields
-     * @return string
-     */
-    private function _generateHash($fields)
-    {
-        ksort($fields, SORT_STRING);
-        $queryString = '';
-        foreach ($fields as $key => $value) {
-            $queryString .= $key . ':' . $value . '|';
-        }
-        $queryString .= Mage::helper('oggetto_payment')->getSecretKey();
-        return md5($queryString);
-    }
 }

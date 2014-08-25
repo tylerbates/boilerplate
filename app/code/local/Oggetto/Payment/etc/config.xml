@@ -61,16 +61,6 @@
                 <class>Oggetto_Payment_Block</class>
             </oggetto_payment>
         </blocks>
-        <events>
-            <sales_order_invoice_save_after>
-                <observers>
-                    <save_payment_key_to_invoice>
-                        <model>oggetto_payment/observer</model>
-                        <method>addPaymentKeyToInvoice</method>
-                    </save_payment_key_to_invoice>
-                </observers>
-            </sales_order_invoice_save_after>
-        </events>
     </global>
     <frontend>
         <routers>

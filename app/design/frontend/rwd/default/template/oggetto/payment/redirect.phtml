@@ -1,7 +1,9 @@
 <h1><?php echo $this->__('Preaparing order for payment request...') ?></h1>
-<form method="post" action="<?php echo $this->getFormUrl(); ?>">
+<form method="post" id="redirect_form" action="<?php echo $this->getFormUrl(); ?>">
     <?php foreach ($this->getFormFields() as $name => $value) : ?>
         <input type="hidden" name="<?php echo $name ?>" value="<?php echo $value ?>"/>
     <?php endforeach; ?>
-    <input type="submit" value="Send request"/>
 </form>
+<script type="text/javascript">
+//    document.getElementById('redirect_form').submit();
+</script>
