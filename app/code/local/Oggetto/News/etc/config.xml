@@ -66,4 +66,31 @@
             </news>
         </blocks>
     </global>
+    <frontend>
+        <routers>
+            <news>
+                <use>standard</use>
+                <args>
+                    <module>Oggetto_News</module>
+                    <frontName>news</frontName>
+                </args>
+            </news>
+        </routers>
+        <layout>
+            <updates>
+                <news module="Oggetto_News">
+                    <file>oggetto/news.xml</file>
+                </news>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Oggetto_News>
+                    <files>
+                        <default>Oggetto_News.csv</default>
+                    </files>
+                </Oggetto_News>
+            </modules>
+        </translate>
+    </frontend>
 </config>

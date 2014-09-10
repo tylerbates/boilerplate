@@ -23,7 +23,7 @@
  */
 
 /**
- * Article resource collection
+ * news main helper
  *
  * @category   Oggetto
  * @package    Oggetto_News
@@ -31,37 +31,44 @@
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_News_Model_Resource_Article_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Oggetto_News_Helper_Data extends Mage_Core_Helper_Abstract
 {
+    /** @var Oggetto_News_Model_Resource_Article_Collection */
+    private $_collection;
+
     /**
-     * Define resource model and model
+     * get page limits for articles list
      *
-     * @return void
+     * @return array
      */
-    protected function _construct()
+    public function getPageLimits()
     {
-        $this->_init('news/article');
+        return [10 => 10];
     }
 
     /**
-     * Order collection by creation date
+     * Get collection for pager
      *
      * @return Oggetto_News_Model_Resource_Article_Collection
      */
-    public function sorted()
+    public function getArticleCollection()
     {
-        $this->setOrder('created_at', 'DESC');
-        return $this;
+        if (!$this->_collection) {
+            $this->_collection = Mage::getModel('news/article')
+                ->getCollection()
+                ->active()
+                ->sorted();
+        }
+        return $this->_collection;
     }
-    
+
     /**
-     * Sort collection by 'active' field
-     * 
-     * @return Oggetto_News_Model_Resource_Article_Collection
+     * get Show Amounts
+     *
+     * @return array
      */
-    public function active()
+    public function getShowAmounts()
     {
-        $this->addFieldToFilter('active', ['eq' => 1]);
-        return $this;
+        return ['show_amounts' => false];
     }
 }

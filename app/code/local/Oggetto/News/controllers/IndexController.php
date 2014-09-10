@@ -23,7 +23,7 @@
  */
 
 /**
- * Article resource collection
+ * news index controller
  *
  * @category   Oggetto
  * @package    Oggetto_News
@@ -31,37 +31,19 @@
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_News_Model_Resource_Article_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Oggetto_News_IndexController extends Mage_Core_Controller_Front_Action
 {
     /**
-     * Define resource model and model
+     * Index action
      *
      * @return void
      */
-    protected function _construct()
+    public function indexAction()
     {
-        $this->_init('news/article');
-    }
-
-    /**
-     * Order collection by creation date
-     *
-     * @return Oggetto_News_Model_Resource_Article_Collection
-     */
-    public function sorted()
-    {
-        $this->setOrder('created_at', 'DESC');
-        return $this;
-    }
-    
-    /**
-     * Sort collection by 'active' field
-     * 
-     * @return Oggetto_News_Model_Resource_Article_Collection
-     */
-    public function active()
-    {
-        $this->addFieldToFilter('active', ['eq' => 1]);
-        return $this;
+        if ($categoryId = $this->getRequest()->getParam('category_id')) {
+            Mage::register('current_category', $categoryId);
+        }
+        $this->loadLayout();
+        $this->renderLayout();
     }
 }

@@ -23,7 +23,7 @@
  */
 
 /**
- * Article resource collection
+ * Articles block
  *
  * @category   Oggetto
  * @package    Oggetto_News
@@ -31,37 +31,25 @@
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_News_Model_Resource_Article_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+class Oggetto_News_Block_Articles extends Mage_Core_Block_Template
 {
     /**
-     * Define resource model and model
+     * Get collection of articles
      *
-     * @return void
+     * @return Oggetto_News_Model_Resource_Article_Collection
      */
-    protected function _construct()
+    public function getCollection()
     {
-        $this->_init('news/article');
+        return Mage::helper('news')->getArticleCollection();
     }
 
     /**
-     * Order collection by creation date
+     * Get pager html
      *
-     * @return Oggetto_News_Model_Resource_Article_Collection
+     * @return string
      */
-    public function sorted()
+    public function getPagerHtml()
     {
-        $this->setOrder('created_at', 'DESC');
-        return $this;
-    }
-    
-    /**
-     * Sort collection by 'active' field
-     * 
-     * @return Oggetto_News_Model_Resource_Article_Collection
-     */
-    public function active()
-    {
-        $this->addFieldToFilter('active', ['eq' => 1]);
-        return $this;
+        return $this->getChildHtml('pager');
     }
 }
