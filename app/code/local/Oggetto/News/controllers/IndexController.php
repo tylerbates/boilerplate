@@ -41,7 +41,7 @@ class Oggetto_News_IndexController extends Mage_Core_Controller_Front_Action
     public function indexAction()
     {
         if ($categoryId = $this->getRequest()->getParam('category_id')) {
-            Mage::register('current_category', $categoryId);
+            Mage::register('current_news_category', $categoryId);
         }
         $this->loadLayout();
         $this->renderLayout();

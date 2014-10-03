@@ -24,9 +24,16 @@
  */
 -->
 <config>
+    <phpunit>
+        <suite>
+            <modules>
+                <Oggetto_News/>
+            </modules>
+        </suite>
+    </phpunit>
     <modules>
         <Oggetto_News>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Oggetto_News>
     </modules>
     <global>
@@ -44,6 +51,9 @@
                     <category>
                         <table>article_category</table>
                     </category>
+                    <article_category_idx>
+                        <table>article_category_idx</table>
+                    </article_category_idx>
                 </entities>
             </news_resource>
         </models>

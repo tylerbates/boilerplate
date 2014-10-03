@@ -33,6 +33,8 @@
 
 class Oggetto_News_Model_Resource_Article extends Mage_Core_Model_Resource_Db_Abstract
 {
+    const IDX_TABLE = 'news/article_category_idx';
+
     /**
      * Resource initialization
      *
@@ -41,5 +43,29 @@ class Oggetto_News_Model_Resource_Article extends Mage_Core_Model_Resource_Db_Ab
     protected function _construct()
     {
         $this->_init('news/article', 'entity_id');
+    }
+
+    /**
+     * remove category info from index table
+     *
+     * @param Oggetto_News_Model_Article $article Article
+     * @return void
+     */
+    public function updateCategoryInfo($article)
+    {
+        try {
+            $where = $this->_getWriteAdapter()->quoteInto('article_id = ?', $article->getId());
+            $this->_getWriteAdapter()->delete($this->getTable(self::IDX_TABLE), $where);
+
+            foreach ($article->getCategories() as $categoryId) {
+                $fields['article_id'] = $article->getId();
+                $fields['category_id'] = $categoryId;
+                $this->_getWriteAdapter()->insert($this->getTable(self::IDX_TABLE), $fields);
+            }
+        } catch (Mage_Core_Exception $e) {
+            Mage::logException($e);
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 }

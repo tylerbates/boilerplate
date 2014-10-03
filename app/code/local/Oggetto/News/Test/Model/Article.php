@@ -23,50 +23,23 @@
  */
 
 /**
- * Categories block
+ * Article model test
  *
  * @category   Oggetto
  * @package    Oggetto_News
- * @subpackage Model
+ * @subpackage Test
  * @author     Andrey Bugaev <abugaev@oggettoweb.com>
  */
 
-class Oggetto_News_Block_Categories extends Mage_Core_Block_Template
+class Oggetto_News_Test_Model_Article extends EcomDev_PHPUnit_Test_Case
 {
     /**
-     * @var Oggetto_News_Model_Resource_Category
-     */
-    private $_category = null;
-
-    /**
-     * retrieve current category
+     * Test something
      *
-     * @return Oggetto_News_Model_Resource_Category
+     * @return void
      */
-    public function getCategory()
+    public function testSomething()
     {
-        return $this->_category;
-    }
-
-    /**
-     * Get child Category html
-     *
-     * @param Oggetto_News_Model_Resource_Category $category Category
-     * @return string
-     */
-    public function getChildCategoryHtml($category)
-    {
-        $this->_category = $category;
-        return $this->toHtml();
-    }
-
-    /**
-     * Get root categories for upper level
-     *
-     * @return Oggetto_News_Model_Resource_Category_Collection
-     */
-    public function getRootCategories()
-    {
-        return Mage::getModel('news/category')->getCollection()->filterByParent();
+        $this->assertEquals(1 + 1, 2);
     }
 }

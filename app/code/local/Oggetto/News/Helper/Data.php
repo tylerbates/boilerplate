@@ -58,6 +58,9 @@ class Oggetto_News_Helper_Data extends Mage_Core_Helper_Abstract
                 ->getCollection()
                 ->active()
                 ->sorted();
+            if ($categoryId = Mage::registry('current_news_category')) {
+                $this->_collection->filterBycategory($categoryId);
+            }
         }
         return $this->_collection;
     }

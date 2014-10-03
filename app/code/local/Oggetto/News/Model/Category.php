@@ -42,4 +42,24 @@ class Oggetto_News_Model_Category extends Mage_Core_Model_Abstract
     {
         $this->_init('news/category');
     }
+
+    /**
+     * retrieve child categories
+     *
+     * @return Oggetto_News_Model_Resource_Category_Collection
+     */
+    public function getChildCategories()
+    {
+        return $this->getCollection()->filterByParent($this);
+    }
+
+    /**
+     * know if category has children
+     *
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return (bool) $this->getChildCategories()->count();
+    }
 }

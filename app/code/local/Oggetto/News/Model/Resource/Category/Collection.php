@@ -42,4 +42,18 @@ class Oggetto_News_Model_Resource_Category_Collection extends Mage_Core_Model_Re
     {
         $this->_init('news/category');
     }
+
+    /**
+     * Filter collection for zero parent
+     *
+     * @param Oggetto_News_Model_Category $parent Parent category
+     * @return Oggetto_News_Model_Resource_Category_Collection
+     */
+    public function filterByParent($parent = null)
+    {
+        $parentId = $parent ? $parent->getId() : 0;
+        $this->addFieldToFilter('parent_id', ['eq' => $parentId]);
+        $this->setOrder('sort_order', Varien_Data_Collection::SORT_ORDER_ASC);
+        return $this;
+    }
 }

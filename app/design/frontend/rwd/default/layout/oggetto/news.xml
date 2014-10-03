@@ -25,6 +25,9 @@
 -->
 <layout>
     <news_index_index>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/news/category.js</name></action>
+        </reference>
         <reference name="left">
             <block type="news/categories" name="news.categories" as="categories" template="news/categories.phtml"/>
         </reference>

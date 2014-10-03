@@ -33,6 +33,9 @@
 
 class Oggetto_News_Model_Resource_Article_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
+    const IDX_TABLE = 'news/article_category_idx';
+    const CATEGORY_TABLE = 'news/category';
+
     /**
      * Define resource model and model
      *
@@ -62,6 +65,28 @@ class Oggetto_News_Model_Resource_Article_Collection extends Mage_Core_Model_Res
     public function active()
     {
         $this->addFieldToFilter('active', ['eq' => 1]);
+        return $this;
+    }
+
+    /**
+     * filter articles by category id
+     *
+     * @param int $categoryId Category Id
+     * @return Oggetto_News_Model_Resource_Article_Collection
+     */
+    public function filterByCategory($categoryId)
+    {
+        $this->_select->joinLeft(
+            ['idx' => $this->getTable(self::IDX_TABLE)],
+            'main_table.entity_id = idx.article_id',
+            []
+        );
+        $this->_select->joinLeft(
+            ['category' => $this->getTable(self::CATEGORY_TABLE)],
+            'category.entity_id = idx.category_id',
+            []
+        );
+        $this->_select->where('idx.category_id = ?', $categoryId);
         return $this;
     }
 }

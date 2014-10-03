@@ -42,4 +42,17 @@ class Oggetto_News_Model_Article extends Mage_Core_Model_Abstract
     {
         $this->_init('news/article');
     }
+
+    /**
+     * handle category saving after article save
+     *
+     * @return Oggetto_News_Model_Article
+     */
+    protected function _afterSave()
+    {
+        parent::_afterSave();
+        if ($this->getCategories()) {
+            $this->getResource()->updateCategoryInfo($this);
+        }
+    }
 }

@@ -1,2 +1,32 @@
-<?php
-echo 234;
+<div id="category_container">
+    <?php if ($category = $this->getCategory()): ?>
+        <li style="padding-left: 10px;">
+            <a href="<?php echo $category->getUrlKey() ?>"><?php echo $category->getLabel() ?></a>
+            <?php if ($category->hasChildren()): ?>
+                <ul>
+                    <?php foreach ($category->getChildCategories() as $childCategory) : ?>
+                        <?php echo $this->getChildCategoryHtml($childCategory) ?>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+        </li>
+    <?php else: ?>
+        <?php $rootCategories = $this->getRootCategories(); ?>
+        <ul>
+            <?php foreach ($rootCategories as $rootCategory) : ?>
+                <li>
+                    <a href="<?php echo $rootCategory->getUrlKey() ?>"><?php echo $rootCategory->getLabel() ?></a>
+                    <?php if ($rootCategory->hasChildren()): ?>
+                        <ul>
+                            <?php foreach ($rootCategory->getChildCategories() as $category) : ?>
+                                <?php echo $this->getChildCategoryHtml($category) ?>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php endif; ?>
+</div>
+
+
